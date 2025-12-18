@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="State-of-the-art study facilities designed for serious NEET PG aspirants. Equipped with modern amenities and a focused learning environment.">
+    <title>NEET PG Study Room - DocNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
+        .study-room-page {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: #1a202c;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: #718096;
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .feature-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 2px dashed;
+            margin-bottom: 16px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .feature-icon.blue {
+            background: #ebf8ff;
+            border-color: #90cdf4;
+            color: #3182ce;
+        }
+
+        .feature-icon.green {
+            background: #f0fff4;
+            border-color: #9ae6b4;
+            color: #38a169;
+        }
+
+        .feature-icon.purple {
+            background: #faf5ff;
+            border-color: #d6bcfa;
+            color: #805ad5;
+        }
+
+        .feature-icon.orange {
+            background: #fffaf0;
+            border-color: #fbd38d;
+            color: #dd6b20;
+        }
+
+        .feature-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .pricing-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .pricing-card.highlighted {
+            border: 2px solid #00b4d8;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .pricing-content {
+            padding: 24px;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .pricing-badge.orange {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .pricing-badge.teal {
+            background: #b2f5ea;
+            color: #234e52;
+        }
+
+        .pricing-badge.purple {
+            background: #e9d8fd;
+            color: #553c9a;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .pricing-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .pricing-original {
+            text-decoration: line-through;
+            color: #a0aec0;
+            font-size: 1rem;
+            margin-right: 8px;
+        }
+
+        .pricing-savings {
+            color: #38a169;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pricing-description {
+            color: #718096;
+            margin-bottom: 16px;
+            font-size: 0.875rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 24px;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            color: #4a5568;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            color: #38a169;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        /* Info Section Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .info-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section h3 {
+            color: #2b6cb0;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+        .info-section p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .info-images {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .info-images img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Guidelines List */
+        .guidelines-list {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .guidelines-list h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: #2d3748;
+        }
+
+        .guideline-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .guideline-item:last-child {
+            border-bottom: none;
+        }
+
+        .guideline-item:before {
+            content: "✓";
+            color: #3182ce;
+            font-weight: 700;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .guideline-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .guideline-description {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            margin-bottom: 48px;
+        }
+
+        .photo-gallery h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 32px;
+            color: #1a202c;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (min-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 48px 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.125rem;
+            margin-bottom: 24px;
+            opacity: 0.95;
+        }
+
+        /* Section Headings */
+        .section-heading {
+            font-size: 1.875rem;
+            text-align: center;
+            margin: 48px 0 32px;
+            color: #1a202c;
+        }
+
+        /* Schedule Table */
+        .schedule-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: #2d3748;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #c6f6d5;
+            color: #22543d;
+        }
+    </style>
+</head>
+<body>
+    <div class="study-room-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>NEET PG Study Room</h1>
+            <p>State-of-the-art study facilities designed for serious NEET PG aspirants. Equipped with modern amenities and a focused learning environment.</p>
+        </div>
+
+        <!-- Hero Image -->
+        <img src="images/view1.jpeg" alt="Study Room" class="hero-image">
+
+        <!-- Features Grid -->
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon blue">
+                    Silent Environment
+                </div>
+                <h3>Silent Environment</h3>
+                <p>Strict no-talking zones for maximum concentration</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon green">
+                    7 AM - 9 PM
+                </div>
+                <h3>7 AM - 9 PM Access</h3>
+                <p>Study during extended hours designed for optimal productivity</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon purple">
+                    Climate Controlled
+                </div>
+                <h3>Climate Controlled</h3>
+                <p>Perfect temperature maintained year-round</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon orange">
+                    Premium Seating
+                </div>
+                <h3>Premium Seating</h3>
+                <p>Ergonomic chairs and spacious desks for comfort</p>
+            </div>
+        </div>
+
+        <!-- Section Heading -->
+        <h2 class="section-heading">Study Room Plans</h2>
+
+        <!-- Pricing Grid -->
+        <div class="pricing-grid">
+            <!-- Daily Pass -->
+            <div class="pricing-card">
+                <img src="images/view2.jpeg" alt="Daily Pass" class="pricing-image">
+                <div class="pricing-content">
+                    <span class="pricing-badge orange">Flexible</span>
+                    <h3>Daily Pass</h3>
+                    <div class="pricing-price">₹200<span style="font-size: 1rem; color: #718096;"> per day</span></div>
+                    <p class="pricing-description">Perfect for occasional study sessions and exam preparation.</p>
+                    <ul class="pricing-features">
+                        <li>8 hours access</li>
+                        <li>Free Wi-Fi</li>
+                        <li>Power outlets at desk</li>
+                        <li>Climate controlled</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Monthly Unlimited -->
+            <div class="pricing-card highlighted">
+                <img src="images/view3.jpeg" alt="Monthly Unlimited" class="pricing-image">
+                <div class="pricing-content">
+                    <span class="pricing-badge teal">Most Popular</span>
+                    <h3>Monthly Unlimited</h3>
+                    <div class="pricing-price">₹1,500<span style="font-size: 1rem; color: #718096;"> per month</span></div>
+                    <p class="pricing-description">Unlimited access for serious aspirants preparing for NEET PG.</p>
+                    <ul class="pricing-features">
+                        <li>7 AM - 9 PM unlimited access</li>
+                        <li>Reserved seat option</li>
+                        <li>Locker facility</li>
+                        <li>Free Wi-Fi</li>
+                        <li>Power outlets at desk</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3 Months Plan -->
+            <div class="pricing-card">
+                <img src="images/view4.jpeg" alt="3 Months Plan" class="pricing-image">
+                <div class="pricing-content">
+                    <span class="pricing-badge purple">Best Value</span>
+                    <h3>3 Months Plan</h3>
+                    <div class="pricing-price">
+                        <span class="pricing-original">₹4,500</span>
+                        ₹4,000
+                    </div>
+                    <p class="pricing-savings">Save ₹500</p>
+                    <p class="pricing-description">Extended access plan with savings for dedicated NEET PG preparation.</p>
+                    <ul class="pricing-features">
+                        <li>7 AM - 9 PM unlimited access</li>
+                        <li>Reserved seat option</li>
+                        <li>Locker facility</li>
+                        <li>Personal storage cabinet</li>
+                        <li>Priority booking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facility Details -->
+        <h2 class="section-heading">Facility Details</h2>
+
+        <div class="info-grid">
+            <div class="info-section">
+                <h3>Study Environment</h3>
+                <p>Spacious individual study desks with ample lighting, power outlets, and storage space. Separate zones for group discussions and silent study.</p>
+                <div class="info-images">
+                    <img src="images/view2.jpeg" alt="Study Environment 1">
+                    <img src="images/view3.jpeg" alt="Study Environment 2">
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Technical Facilities</h3>
+                <p>High-speed Wi-Fi, digital library access, and computer terminals for online tests available throughout operating hours.</p>
+                <div class="info-images">
+                    <img src="images/view4.jpeg" alt="Technical Facilities 1">
+                    <img src="images/docnest-studyhall-arrangment.png" alt="Seating Arrangement">
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule & Guidelines -->
+        <h2 class="section-heading">Operating Hours & Guidelines</h2>
+
+        <div class="info-grid">
+            <div class="schedule-card">
+                <h3>Operating Hours</h3>
+                <div class="schedule-item">
+                    <span>7:00 AM - 9:00 PM</span>
+                    <span class="schedule-badge">Open Daily</span>
+                </div>
+            </div>
+
+            <div class="guidelines-list">
+                <h3>Study Room Guidelines</h3>
+                <div class="guideline-item">
+                    <div>
+                        <div class="guideline-label">Silence Zone</div>
+                        <div class="guideline-description">No talking in designated areas</div>
+                    </div>
+                </div>
+                <div class="guideline-item">
+                    <div>
+                        <div class="guideline-label">Mobile Policy</div>
+                        <div class="guideline-description">Phones on silent mode only</div>
+                    </div>
+                </div>
+                <div class="guideline-item">
+                    <div>
+                        <div class="guideline-label">Food Policy</div>
+                        <div class="guideline-description">Only water bottles allowed</div>
+                    </div>
+                </div>
+                <div class="guideline-item">
+                    <div>
+                        <div class="guideline-label">Booking</div>
+                        <div class="guideline-description">Reserve seats up to 24 hours in advance</div>
+                    </div>
+                </div>
+                <div class="guideline-item">
+                    <div>
+                        <div class="guideline-label">Break Area</div>
+                        <div class="guideline-description">Dedicated space for refreshments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Services -->
+        <h2 class="section-heading">Additional Services</h2>
+
+        <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 48px;">
+            <div class="feature-card">
+                <div class="feature-icon blue">
+                    Library
+                </div>
+                <h3>Reference Library</h3>
+                <p>Extensive collection of NEET PG books and materials</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon green">
+                    Study Groups
+                </div>
+                <h3>Study Groups</h3>
+                <p>Peer learning and group study sessions</p>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="photo-gallery">
+            <h2>Photo Gallery</h2>
+            <div class="gallery-grid">
+                <img src="images/view1.jpeg" alt="Study Room View 1">
+                <img src="images/view2.jpeg" alt="Study Room View 2">
+                <img src="images/view3.jpeg" alt="Study Room View 3">
+                <img src="images/view4.jpeg" alt="Study Room View 4">
+                <img src="images/view5.jpeg" alt="Study Room View 5">
+                <img src="images/docnest-studyhall-arrangment.png" alt="Seating Arrangement">
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Start Your NEET PG Journey Today!</h2>
+            <p>Contact us for more information, pricing details, or to schedule a visit to our facilities.</p>
+            <p>Contact us via WhatsApp, phone, or email.</p>
+        </div>
+    </div>
+</body>
+</html>
