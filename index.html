@@ -455,6 +455,68 @@
             background: #c6f6d5;
             color: #22543d;
         }
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .contact-info {
+                flex-direction: row;
+                justify-content: center;
+                gap: 40px;
+            }
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .contact-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .contact-value a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .contact-value a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .whatsapp-btn {
+            background: #25d366 !important;
+            padding: 14px 28px !important;
+            font-size: 1.125rem !important;
+            border-radius: 8px !important;
+            display: inline-flex !important;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #20ba5a !important;
+        }
     </style>
 </head>
 <body>
@@ -674,7 +736,31 @@
         <div class="cta-section">
             <h2>Start Your NEET PG Journey Today!</h2>
             <p>Contact us for more information, pricing details, or to schedule a visit to our facilities.</p>
-            <p>Contact us via WhatsApp, phone, or email.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">WhatsApp Us</div>
+                    <div class="contact-value">
+                        <a href="https://wa.me/918281447237?text=I'm%20Interested%20in%20DocNest%20Services" class="whatsapp-btn" target="_blank">
+                            💬 Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-label">Call Us</div>
+                    <div class="contact-value">
+                        <a href="tel:+918281447237">+91 82814 47237</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-label">Visit Us</div>
+                    <div class="contact-value">
+                        1st Floor, 25th Hour Clinic
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
