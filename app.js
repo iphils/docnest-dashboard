@@ -1,9 +1,8 @@
 // Main application logic - Renders content from config.js
 document.addEventListener('DOMContentLoaded', function() {
 
-  // Update page metadata
-  document.title = siteConfig.metadata.title;
-  document.querySelector('meta[name="description"]').setAttribute('content', siteConfig.metadata.description);
+  // Render SEO meta tags
+  renderSEOMetaTags();
 
   // Render page header
   renderPageHeader();
@@ -33,6 +32,57 @@ document.addEventListener('DOMContentLoaded', function() {
   // Render contact section
   renderContact();
 });
+
+function renderSEOMetaTags() {
+  const head = document.head;
+
+  // Update page title
+  document.title = siteConfig.metadata.title;
+
+  // Update existing meta description
+  document.querySelector('meta[name="description"]').setAttribute('content', siteConfig.metadata.description);
+
+  // Create helper function to add meta tag
+  function addMetaTag(attributes) {
+    const meta = document.createElement('meta');
+    Object.entries(attributes).forEach(([key, value]) => {
+      meta.setAttribute(key, value);
+    });
+    head.appendChild(meta);
+  }
+
+  // Add basic meta tags
+  addMetaTag({ name: 'keywords', content: siteConfig.metadata.keywords });
+  addMetaTag({ name: 'author', content: siteConfig.metadata.author });
+  addMetaTag({ name: 'robots', content: siteConfig.metadata.robots });
+
+  // Add canonical link
+  const canonical = document.createElement('link');
+  canonical.rel = 'canonical';
+  canonical.href = siteConfig.metadata.canonical;
+  head.appendChild(canonical);
+
+  // Add Open Graph meta tags
+  addMetaTag({ property: 'og:type', content: siteConfig.seo.og.type });
+  addMetaTag({ property: 'og:url', content: siteConfig.seo.og.url });
+  addMetaTag({ property: 'og:title', content: siteConfig.seo.og.title });
+  addMetaTag({ property: 'og:description', content: siteConfig.seo.og.description });
+  addMetaTag({ property: 'og:image', content: siteConfig.seo.og.image });
+  addMetaTag({ property: 'og:locale', content: siteConfig.seo.og.locale });
+
+  // Add Twitter Card meta tags
+  addMetaTag({ property: 'twitter:card', content: siteConfig.seo.twitter.card });
+  addMetaTag({ property: 'twitter:url', content: siteConfig.seo.twitter.url });
+  addMetaTag({ property: 'twitter:title', content: siteConfig.seo.twitter.title });
+  addMetaTag({ property: 'twitter:description', content: siteConfig.seo.twitter.description });
+  addMetaTag({ property: 'twitter:image', content: siteConfig.seo.twitter.image });
+
+  // Add structured data (JSON-LD)
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(siteConfig.structuredData);
+  head.appendChild(script);
+}
 
 function renderPageHeader() {
   const headerDiv = document.getElementById('page-header');

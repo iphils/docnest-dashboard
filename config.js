@@ -2,10 +2,88 @@
 const siteConfig = {
   // Page metadata
   metadata: {
-    title: "Professional Study Room - DocNest",
-    description: "State-of-the-art study facilities designed for serious aspirants preparing for CA, UPSC, PSC, and other competitive exams. Equipped with modern amenities and a focused learning environment.",
-    pageHeading: "Professional Study Room",
-    pageSubheading: "State-of-the-art study facilities designed for serious aspirants preparing for CA, UPSC, PSC, and other competitive exams. Equipped with modern amenities and a focused learning environment."
+    title: "DocNest Study Room in Thripunithura, Ernakulam - DocNest | CA, UPSC, PSC Prep",
+    description: "DocNest study room in Thripunithura, Ernakulam for NEETPG,CA, UPSC, PSC, JEE-Mains, JEE-Advanced and competitive exam preparation. Silent environment, climate controlled, ₹200/day or ₹1500/month. Open 7 AM - 9 PM.",
+    keywords: "study room Thripunithura, study room Ernakulam, study room Kochi, CA preparation Ernakulam, UPSC coaching Kochi,JEE coaching Kochi, JEE-Advanced PSC study center Kerala, competitive exam preparation, professional study space, library Thripunithura, silent study room Ernakulam",
+    author: "DocNest",
+    robots: "index, follow",
+    canonical: "https://docnest.co.in/",
+    pageHeading: "DocNest Study Room",
+    pageSubheading: "State-of-the-art study facilities designed for serious aspirants preparing for CA, UPSC, PSC, JEE-Mains, JEE-Advanced and other competitive exams. Equipped with modern amenities and a focused learning environment."
+  },
+
+  // SEO - Open Graph & Twitter Cards
+  seo: {
+    og: {
+      type: "website",
+      url: "https://docnest.co.in/",
+      title: "DocNest Study Room in Thripunithura, Ernakulam - DocNest",
+      description: "State-of-the-art study facilities in Kochi for CA, UPSC, PSC aspirants. Climate controlled, silent environment. ₹200/day or ₹1500/month.",
+      image: "https://docnest.co.in/images/view1.jpeg",
+      locale: "en_IN"
+    },
+    twitter: {
+      card: "summary_large_image",
+      url: "https://docnest.co.in/",
+      title: "DocNest Study Room in Thripunithura, Ernakulam - DocNest",
+      description: "State-of-the-art study facilities in Kochi for CA, UPSC, PSC aspirants. Climate controlled, silent environment.",
+      image: "https://docnest.co.in/images/view1.jpeg"
+    }
+  },
+
+  // Structured Data - Local Business Schema
+  structuredData: {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "DocNest Study Room",
+    "description": "DocNest study facilities for competitive exam aspirants in Thripunithura, Ernakulam",
+    "image": "https://docnest.co.in/images/view1.jpeg",
+    "telephone": "+918281447237",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1st Floor, 25th Hour Clinic, Main Road",
+      "addressLocality": "Thripunithura",
+      "addressRegion": "Kerala",
+      "postalCode": "682301",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "9.950012",
+      "longitude": "76.349988"
+    },
+    "url": "https://docnest.co.in",
+    "priceRange": "₹₹",
+    "openingHours": "Mo-Su 07:00-21:00",
+    "sameAs": [
+      "https://wa.me/918281447237"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Study Room Plans",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Daily Pass",
+            "description": "8 hours access with Wi-Fi and power outlets"
+          },
+          "price": "200",
+          "priceCurrency": "INR"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Monthly Unlimited",
+            "description": "Unlimited access with reserved seat and locker"
+          },
+          "price": "1500",
+          "priceCurrency": "INR"
+        }
+      ]
+    }
   },
 
   // Hero section
