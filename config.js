@@ -3,7 +3,7 @@ const siteConfig = {
   // Page metadata
   metadata: {
     title: "DocNest Study Room in Thripunithura, Ernakulam - DocNest | CA, UPSC, PSC Prep",
-    description: "DocNest study room in Thripunithura, Ernakulam for NEETPG,CA, UPSC, PSC, JEE-Mains, JEE-Advanced and competitive exam preparation. Silent environment, climate controlled, ₹200/day or ₹1500/month. Open 7 AM - 9 PM.",
+    description: "DocNest study room in Thripunithura, Ernakulam for NEETPG,CA, UPSC, PSC, JEE-Mains, JEE-Advanced and competitive exam preparation. Silent environment, climate controlled, ₹299/day or ₹2000/month. Open 7 AM - 9 PM.",
     keywords: "study room Thripunithura, study room Ernakulam, study room Kochi, CA preparation Ernakulam, UPSC coaching Kochi,JEE coaching Kochi, JEE-Advanced PSC study center Kerala, competitive exam preparation, professional study space, library Thripunithura, silent study room Ernakulam",
     author: "DocNest",
     robots: "index, follow",
@@ -18,7 +18,7 @@ const siteConfig = {
       type: "website",
       url: "https://docnest.co.in/",
       title: "DocNest Study Room in Thripunithura, Ernakulam - DocNest",
-      description: "State-of-the-art study facilities in Kochi for CA, UPSC, PSC aspirants. Climate controlled, silent environment. ₹200/day or ₹1500/month.",
+      description: "State-of-the-art study facilities in Kochi for CA, UPSC, PSC aspirants. Climate controlled, silent environment. ₹299/day or ₹2000/month.",
       image: "https://docnest.co.in/images/view1.jpeg",
       locale: "en_IN"
     },
@@ -69,7 +69,7 @@ const siteConfig = {
             "name": "Daily Pass",
             "description": "8 hours access with Wi-Fi and power outlets"
           },
-          "price": "200",
+          "price": "299",
           "priceCurrency": "INR"
         },
         {
@@ -79,7 +79,7 @@ const siteConfig = {
             "name": "Monthly Unlimited",
             "description": "Unlimited access with reserved seat and locker"
           },
-          "price": "1500",
+          "price": "2000",
           "priceCurrency": "INR"
         }
       ]
@@ -129,7 +129,7 @@ const siteConfig = {
         color: "orange"
       },
       title: "Daily Pass",
-      price: "₹200",
+      price: "₹299",
       period: "per day",
       description: "Perfect for occasional study sessions and exam preparation.",
       features: [
@@ -147,13 +147,12 @@ const siteConfig = {
         color: "teal"
       },
       title: "Monthly Unlimited",
-      price: "₹1,500",
+      price: "₹2,000",
       period: "per month",
       description: "Unlimited access for dedicated aspirants preparing for competitive exams.",
       features: [
         "Unlimited access during operating hours",
         "Reserved seat option",
-        "Locker facility",
         "Free Wi-Fi",
         "Power outlets at desk"
       ],

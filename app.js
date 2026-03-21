@@ -215,13 +215,6 @@ function renderContact() {
       </div>
 
       <div class="contact-item">
-        <div class="contact-label">Call Us</div>
-        <div class="contact-value">
-          <a href="tel:${siteConfig.contact.phone.number}">${siteConfig.contact.phone.display}</a>
-        </div>
-      </div>
-
-      <div class="contact-item">
         <div class="contact-label">Visit Us</div>
         <div class="contact-value">
           ${siteConfig.contact.address.line1}
