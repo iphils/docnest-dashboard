@@ -3,7 +3,7 @@ const siteConfig = {
   // Page metadata
   metadata: {
     title: "DocNest Study Room in Thripunithura, Ernakulam - DocNest | CA, UPSC, PSC Prep",
-    description: "DocNest study room in Thripunithura, Ernakulam for NEETPG,CA, UPSC, PSC, JEE-Mains, JEE-Advanced and competitive exam preparation. Silent environment, climate controlled, ₹299/day or ₹2000/month. Open 7 AM - 9 PM.",
+    description: "DocNest study room in Thripunithura, Ernakulam for NEETPG,CA, UPSC, PSC, JEE-Mains, JEE-Advanced and competitive exam preparation. Silent environment, climate controlled, ₹299/day or ₹2000/month. Open 9 AM - 9 PM.",
     keywords: "study room Thripunithura, study room Ernakulam, study room Kochi, CA preparation Ernakulam, UPSC coaching Kochi,JEE coaching Kochi, JEE-Advanced PSC study center Kerala, competitive exam preparation, professional study space, library Thripunithura, silent study room Ernakulam",
     author: "DocNest",
     robots: "index, follow",
@@ -54,7 +54,7 @@ const siteConfig = {
     },
     "url": "https://docnest.co.in",
     "priceRange": "₹₹",
-    "openingHours": "Mo-Su 07:00-21:00",
+    "openingHours": "Mo-Su 09:00-21:00",
     "sameAs": [
       "https://wa.me/918281447237"
     ],
@@ -183,7 +183,7 @@ const siteConfig = {
   // Operating hours
   operatingHours: [
     {
-      days: "Monday - Saturday: 7:00 AM - 9:00 PM",
+      days: "Monday - Saturday: 9:00 AM - 9:00 PM",
       badge: {
         text: "Weekdays",
         color: "green"
