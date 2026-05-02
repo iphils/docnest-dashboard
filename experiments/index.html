@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Experiments &mdash; DocNest</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, #fef9f3 0%, #f0f7f4 100%);
+    color: #2d3748;
+    min-height: 100vh;
+    padding: 32px 16px 48px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 36px; }
+  h1 { font-size: 2.2rem; color: #1a202c; margin-bottom: 8px; }
+  .subtitle { font-size: 1.15rem; color: #4a5568; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 600px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+  a.card {
+    display: block;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 24px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  a.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  }
+  .icon { font-size: 2.2rem; margin-bottom: 8px; }
+  .card h2 { font-size: 1.25rem; margin-bottom: 6px; color: #2b6cb0; }
+  .card p { font-size: 1rem; color: #4a5568; }
+  .note {
+    margin-top: 36px;
+    padding: 16px 18px;
+    background: rgba(214, 158, 46, 0.08);
+    border-left: 3px solid #d69e2e;
+    border-radius: 6px;
+    color: #744210;
+    font-size: 0.95rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Little Experiments</h1>
+    <p class="subtitle">A quiet corner for playful things made with AI.</p>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="piano.html">
+      <div class="icon">🎹</div>
+      <h2>Keyboard Piano</h2>
+      <p>Play notes on your keyboard. Follow Malayalam classics or play freely.</p>
+    </a>
+    <a class="card" href="web-swing.html">
+      <div class="icon">🕷️</div>
+      <h2>Web Swing</h2>
+      <p>Aim, fire web at glowing anchors, swing across a dusk cityscape.</p>
+    </a>
+    <a class="card" href="memory-match.html">
+      <div class="icon">🌻</div>
+      <h2>Memory Match</h2>
+      <p>Flip cards. Find matching pairs. Calm and unrushed.</p>
+    </a>
+  </div>
+
+  <div class="note">
+    These are small things, made for fun. Share what you make &mdash; that&rsquo;s what this corner is for.
+  </div>
+</div>
+</body>
+</html>

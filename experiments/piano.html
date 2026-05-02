@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Keyboard Piano — Make a Little Music</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+    color: #f7fafc;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+    line-height: 1.5;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 28px; }
+
+  h1 {
+    font-size: 2.4rem;
+    color: #fefcbf;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: #cbd5e0;
+  }
+
+  .panel {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .label {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+    margin-right: 4px;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 1.05rem;
+    padding: 10px 18px;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+    color: #f7fafc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-height: 44px;
+  }
+
+  button:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.35);
+  }
+
+  button.active {
+    background: #d69e2e;
+    border-color: #d69e2e;
+    color: #1a202c;
+  }
+
+  button.primary {
+    background: #38a169;
+    border-color: #38a169;
+  }
+
+  button.primary:hover {
+    background: #2f855a;
+    border-color: #2f855a;
+  }
+
+  /* Piano */
+  .piano-shell {
+    background: linear-gradient(180deg, #4a2c0f 0%, #2d1808 100%);
+    border-radius: 16px;
+    padding: 18px 18px 22px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.05);
+    margin-bottom: 24px;
+  }
+
+  .piano {
+    position: relative;
+    height: 220px;
+    user-select: none;
+  }
+
+  .white-keys {
+    display: flex;
+    height: 100%;
+    gap: 4px;
+  }
+
+  .key {
+    cursor: pointer;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 14px;
+    transition: all 0.05s;
+    position: relative;
+  }
+
+  .key.white {
+    flex: 1;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+    border: 1px solid #888;
+    box-shadow: 0 4px 0 #ccc, 0 5px 4px rgba(0,0,0,0.2);
+    color: #2d3748;
+  }
+
+  .key.white.pressed {
+    background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+    box-shadow: 0 1px 0 #ccc, 0 2px 2px rgba(0,0,0,0.2);
+    transform: translateY(2px);
+  }
+
+  .key.white.next {
+    background: linear-gradient(180deg, #bee3f8 0%, #90cdf4 100%);
+    box-shadow: 0 4px 0 #63b3ed, 0 5px 8px rgba(99,179,237,0.4);
+  }
+
+  .black-keys {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    display: flex;
+    pointer-events: none;
+  }
+
+  .key.black {
+    width: 7%;
+    background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
+    color: #cbd5e0;
+    box-shadow: 0 3px 0 #000, 0 4px 4px rgba(0,0,0,0.4);
+    pointer-events: auto;
+    position: absolute;
+    height: 100%;
+    border-radius: 0 0 6px 6px;
+    z-index: 2;
+  }
+
+  .key.black.pressed {
+    background: linear-gradient(180deg, #744210 0%, #5d3208 100%);
+    box-shadow: 0 1px 0 #000, 0 2px 2px rgba(0,0,0,0.4);
+    transform: translateY(1px);
+  }
+
+  .key.black.next {
+    background: linear-gradient(180deg, #2c5282 0%, #2a4365 100%);
+    box-shadow: 0 3px 0 #1a365d, 0 4px 8px rgba(99,179,237,0.4);
+  }
+
+  .key-label {
+    font-size: 1rem;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  .key.black .key-label { font-size: 0.85rem; padding-bottom: 4px; }
+
+  .song-area {
+    text-align: center;
+    margin-top: 10px;
+    min-height: 36px;
+    font-size: 1.15rem;
+    color: #fefcbf;
+  }
+
+  .song-area .progress {
+    color: #cbd5e0;
+    font-size: 1rem;
+    margin-top: 4px;
+  }
+
+  .footer-note {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 0.95rem;
+    margin-top: 28px;
+  }
+
+  .footer-note a { color: #fbd38d; text-decoration: none; }
+
+  /* All-notes ribbon */
+  .ribbon-wrap {
+    background: rgba(0,0,0,0.25);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 14px;
+  }
+
+  .ribbon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .ribbon-title {
+    font-size: 1.15rem;
+    color: #fefcbf;
+    font-weight: 600;
+  }
+
+  .ribbon-progress {
+    color: #cbd5e0;
+    font-size: 1rem;
+  }
+
+  .ribbon-progress strong {
+    color: #90cdf4;
+    font-size: 1.15rem;
+    margin: 0 2px;
+  }
+
+  .note-ribbon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    line-height: 1;
+  }
+
+  .note-chip {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.08);
+    color: #cbd5e0;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+
+  .note-chip.done {
+    background: rgba(72, 187, 120, 0.18);
+    color: #9ae6b4;
+    border-color: rgba(154, 230, 180, 0.3);
+  }
+
+  .note-chip.current {
+    background: #2b6cb0;
+    color: white;
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 2px rgba(99,179,237,0.5);
+    transform: scale(1.15);
+  }
+
+  .note-chip.playing {
+    background: #d69e2e;
+    color: #1a202c;
+    border-color: #fefcbf;
+    box-shadow: 0 0 0 2px rgba(254,252,191,0.6);
+    transform: scale(1.2);
+  }
+
+  .restart-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .disclaimer {
+    background: rgba(214, 158, 46, 0.1);
+    border-left: 3px solid #d69e2e;
+    padding: 10px 14px;
+    border-radius: 6px;
+    color: #fefcbf;
+    font-size: 0.95rem;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  .hint {
+    background: rgba(255, 252, 191, 0.08);
+    border-left: 3px solid #d69e2e;
+    padding: 12px 16px;
+    border-radius: 6px;
+    color: #fefcbf;
+    font-size: 1.05rem;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.9rem; }
+    .piano { height: 180px; }
+    .key-label { font-size: 0.85rem; }
+    .key.black .key-label { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🎹 Keyboard Piano</h1>
+    <p class="subtitle">Press the keys on your keyboard. Make a little music.</p>
+  </header>
+
+  <div class="panel">
+    <div class="row">
+      <span class="label">Mode:</span>
+      <button id="freeBtn" class="active">Free Play</button>
+      <button id="songBtn">Follow a Song</button>
+    </div>
+  </div>
+
+  <div class="panel" id="songPanel" style="display:none;">
+    <div class="row">
+      <span class="label">Malayalam classics:</span>
+      <button data-song="maveli">Maveli Naadu</button>
+      <button data-song="omanathinkal">Omanathinkal Kidavo</button>
+      <button data-song="aaraariraro">Aaraariraro</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <span class="label">Other songs:</span>
+      <button data-song="twinkle">Twinkle Twinkle</button>
+      <button data-song="mary">Mary Had a Little Lamb</button>
+      <button data-song="birthday">Happy Birthday</button>
+      <button data-song="jingle">Jingle Bells</button>
+    </div>
+    <div class="disclaimer">
+      The Malayalam tunes are simplified to fit a basic 7-note scale &mdash; close, but not a perfect Carnatic rendering. Tell me which sound off and I&rsquo;ll tune them.
+    </div>
+  </div>
+
+  <div class="piano-shell">
+    <div class="piano" id="piano"></div>
+    <div class="song-area" id="songArea"></div>
+  </div>
+
+  <p class="footer-note">
+    A small experiment in playful AI tools.
+    <a href="../index.html">Back to DocNest</a>
+  </p>
+</div>
+
+<script>
+  // Note layout: 13 white keys + black keys. We'll do C4 to C5 (one octave + a bit).
+  // White keys: C D E F G A B C → keyboard a s d f g h j k
+  // Black keys: C# D# _ F# G# A# → keyboard w e _ t y u
+  const WHITE = [
+    { note: 'C4',  freq: 261.63, key: 'a' },
+    { note: 'D4',  freq: 293.66, key: 's' },
+    { note: 'E4',  freq: 329.63, key: 'd' },
+    { note: 'F4',  freq: 349.23, key: 'f' },
+    { note: 'G4',  freq: 392.00, key: 'g' },
+    { note: 'A4',  freq: 440.00, key: 'h' },
+    { note: 'B4',  freq: 493.88, key: 'j' },
+    { note: 'C5',  freq: 523.25, key: 'k' },
+    { note: 'D5',  freq: 587.33, key: 'l' },
+    { note: 'E5',  freq: 659.25, key: ';' }
+  ];
+
+  const BLACK = [
+    { note: 'C#4', freq: 277.18, key: 'w', afterWhite: 0 },
+    { note: 'D#4', freq: 311.13, key: 'e', afterWhite: 1 },
+    { note: 'F#4', freq: 369.99, key: 't', afterWhite: 3 },
+    { note: 'G#4', freq: 415.30, key: 'y', afterWhite: 4 },
+    { note: 'A#4', freq: 466.16, key: 'u', afterWhite: 5 },
+    { note: 'C#5', freq: 554.37, key: 'o', afterWhite: 7 },
+    { note: 'D#5', freq: 622.25, key: 'p', afterWhite: 8 }
+  ];
+
+  const SONGS = {
+    twinkle: {
+      title: 'Twinkle Twinkle Little Star',
+      notes: ['C4','C4','G4','G4','A4','A4','G4','F4','F4','E4','E4','D4','D4','C4',
+              'G4','G4','F4','F4','E4','E4','D4','G4','G4','F4','F4','E4','E4','D4',
+              'C4','C4','G4','G4','A4','A4','G4','F4','F4','E4','E4','D4','D4','C4']
+    },
+    mary: {
+      title: 'Mary Had a Little Lamb',
+      notes: ['E4','D4','C4','D4','E4','E4','E4','D4','D4','D4','E4','G4','G4',
+              'E4','D4','C4','D4','E4','E4','E4','E4','D4','D4','E4','D4','C4']
+    },
+    birthday: {
+      title: 'Happy Birthday',
+      notes: ['C4','C4','D4','C4','F4','E4','C4','C4','D4','C4','G4','F4',
+              'C4','C4','C5','A4','F4','E4','D4','A#4','A#4','A4','F4','G4','F4']
+    },
+    jingle: {
+      title: 'Jingle Bells',
+      notes: ['E4','E4','E4','E4','E4','E4','E4','G4','C4','D4','E4',
+              'F4','F4','F4','F4','F4','E4','E4','E4','E4','D4','D4','E4','D4','G4']
+    },
+    maveli: {
+      title: 'Maveli Naadu Vaaneedum Kaalam',
+      notes: ['C4','D4','E4','E4','G4','G4','E4','D4','C4','C4',
+              'E4','E4','G4','G4','G4','G4','E4','D4','C4',
+              'G4','G4','A4','A4','G4','E4','D4','C4',
+              'E4','E4','D4','D4','C4','C4']
+    },
+    omanathinkal: {
+      title: 'Omanathinkal Kidavo',
+      notes: ['C4','D4','E4','F4','G4','G4','G4',
+              'A4','G4','F4','E4','D4','D4','C4',
+              'E4','E4','G4','G4','A4','G4','F4','E4',
+              'D4','E4','F4','E4','D4','C4']
+    },
+    aaraariraro: {
+      title: 'Aaraariraro (Lullaby)',
+      notes: ['G4','E4','G4','E4','D4','D4','C4',
+              'G4','E4','G4','E4','D4','D4','C4',
+              'E4','D4','C4','D4','E4','D4','C4']
+    }
+  };
+
+  // Build a flat lookup: keyboard key → note object
+  const keyMap = {};
+  WHITE.forEach(k => { keyMap[k.key] = k; });
+  BLACK.forEach(k => { keyMap[k.key] = k; });
+
+  // Note → DOM element
+  const noteElements = {};
+
+  // Audio
+  let audioCtx = null;
+  function ensureAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playNote(freq) {
+    ensureAudio();
+    const now = audioCtx.currentTime;
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc1.type = 'sine';
+    osc2.type = 'triangle';
+    osc1.frequency.value = freq;
+    osc2.frequency.value = freq * 2;
+
+    const gain2 = audioCtx.createGain();
+    gain2.gain.value = 0.15;
+
+    osc1.connect(gain);
+    osc2.connect(gain2);
+    gain2.connect(gain);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.35, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
+
+    gain.connect(audioCtx.destination);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 1.5);
+    osc2.stop(now + 1.5);
+  }
+
+  // Build piano DOM
+  function buildPiano() {
+    const piano = document.getElementById('piano');
+    piano.innerHTML = '';
+
+    const whiteRow = document.createElement('div');
+    whiteRow.className = 'white-keys';
+
+    WHITE.forEach(k => {
+      const el = document.createElement('div');
+      el.className = 'key white';
+      el.dataset.note = k.note;
+      el.innerHTML = `<span class="key-label">${k.key.toUpperCase()}</span>`;
+      el.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNote(k.note); });
+      el.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNote(k.note); }, { passive: false });
+      whiteRow.appendChild(el);
+      noteElements[k.note] = el;
+    });
+    piano.appendChild(whiteRow);
+
+    const blackRow = document.createElement('div');
+    blackRow.className = 'black-keys';
+
+    // Position black keys relative to white-key columns.
+    // Each white key is 1/N of width. Black key sits between white[i] and white[i+1].
+    const widthPct = 100 / WHITE.length;
+
+    BLACK.forEach(k => {
+      const el = document.createElement('div');
+      el.className = 'key black';
+      el.dataset.note = k.note;
+      el.style.left = `calc(${(k.afterWhite + 1) * widthPct}% - 3.5%)`;
+      el.innerHTML = `<span class="key-label">${k.key.toUpperCase()}</span>`;
+      el.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNote(k.note); });
+      el.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNote(k.note); }, { passive: false });
+      blackRow.appendChild(el);
+      noteElements[k.note] = el;
+    });
+    piano.appendChild(blackRow);
+  }
+
+  function flashKey(note) {
+    const el = noteElements[note];
+    if (!el) return;
+    el.classList.add('pressed');
+    setTimeout(() => el.classList.remove('pressed'), 180);
+  }
+
+  // Song state
+  let currentSong = null;
+  let songIndex = 0;
+
+  function triggerNote(note) {
+    const lookup = WHITE.find(w => w.note === note) || BLACK.find(b => b.note === note);
+    if (!lookup) return;
+    playNote(lookup.freq);
+    flashKey(note);
+
+    if (currentSong && currentSong.notes[songIndex] === note) {
+      songIndex++;
+      updateSongUI();
+    }
+  }
+
+  function noteToKey(note) {
+    const lookup = WHITE.find(w => w.note === note) || BLACK.find(b => b.note === note);
+    return lookup ? lookup.key.toUpperCase() : note;
+  }
+
+  function updateSongUI() {
+    document.querySelectorAll('.key.next').forEach(el => el.classList.remove('next'));
+    const songArea = document.getElementById('songArea');
+
+    if (!currentSong) {
+      songArea.innerHTML = '';
+      return;
+    }
+
+    const total = currentSong.notes.length;
+    const done = songIndex >= total;
+
+    if (!done) {
+      noteElements[currentSong.notes[songIndex]]?.classList.add('next');
+    }
+
+    const chips = currentSong.notes.map((n, i) => {
+      let cls = 'note-chip';
+      if (i < songIndex) cls += ' done';
+      else if (i === songIndex) cls += ' current';
+      return `<div class="${cls}">${noteToKey(n)}</div>`;
+    }).join('');
+
+    const headerRight = done
+      ? `<span class="ribbon-progress">🌟 You played the whole song!</span>`
+      : `<span class="ribbon-progress"><strong>${songIndex}</strong> of <strong>${total}</strong> notes &middot; press <strong>${noteToKey(currentSong.notes[songIndex])}</strong> next</span>`;
+
+    songArea.innerHTML = `
+      <div class="ribbon-wrap">
+        <div class="ribbon-header">
+          <span class="ribbon-title">${currentSong.title}</span>
+          ${headerRight}
+        </div>
+        <div class="note-ribbon">${chips}</div>
+        <div class="restart-row">
+          <button id="listenSong">${isPlaying ? '⏸ Stop' : '▶ Listen'}</button>
+          <button id="restartSong" class="primary">Start Over</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('restartSong').addEventListener('click', () => {
+      stopPlayback();
+      songIndex = 0;
+      updateSongUI();
+    });
+
+    document.getElementById('listenSong').addEventListener('click', () => {
+      if (isPlaying) stopPlayback();
+      else playSong();
+    });
+  }
+
+  // Auto-play state
+  let isPlaying = false;
+  let playTimeouts = [];
+  const PLAY_TEMPO = 520; // ms between notes — slow enough to follow
+
+  function playSong() {
+    if (!currentSong || isPlaying) return;
+    ensureAudio();
+    isPlaying = true;
+
+    const notes = currentSong.notes;
+    notes.forEach((note, i) => {
+      const t = setTimeout(() => {
+        const lookup = WHITE.find(w => w.note === note) || BLACK.find(b => b.note === note);
+        if (lookup) playNote(lookup.freq);
+        flashKey(note);
+        const chips = document.querySelectorAll('.note-ribbon .note-chip');
+        chips.forEach(c => c.classList.remove('playing'));
+        chips[i]?.classList.add('playing');
+        chips[i]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }, i * PLAY_TEMPO);
+      playTimeouts.push(t);
+    });
+
+    const endT = setTimeout(() => {
+      isPlaying = false;
+      document.querySelectorAll('.note-ribbon .note-chip').forEach(c => c.classList.remove('playing'));
+      const btn = document.getElementById('listenSong');
+      if (btn) btn.textContent = '▶ Listen';
+    }, notes.length * PLAY_TEMPO + 300);
+    playTimeouts.push(endT);
+
+    const btn = document.getElementById('listenSong');
+    if (btn) btn.textContent = '⏸ Stop';
+  }
+
+  function stopPlayback() {
+    playTimeouts.forEach(t => clearTimeout(t));
+    playTimeouts = [];
+    isPlaying = false;
+    document.querySelectorAll('.note-ribbon .note-chip').forEach(c => c.classList.remove('playing'));
+    const btn = document.getElementById('listenSong');
+    if (btn) btn.textContent = '▶ Listen';
+  }
+
+  // Keyboard input
+  window.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+    const k = e.key.toLowerCase();
+    const note = keyMap[k];
+    if (note) {
+      e.preventDefault();
+      triggerNote(note.note);
+    }
+  });
+
+  // Mode toggle
+  document.getElementById('freeBtn').addEventListener('click', () => {
+    document.getElementById('freeBtn').classList.add('active');
+    document.getElementById('songBtn').classList.remove('active');
+    document.getElementById('songPanel').style.display = 'none';
+    stopPlayback();
+    currentSong = null;
+    songIndex = 0;
+    updateSongUI();
+  });
+
+  document.getElementById('songBtn').addEventListener('click', () => {
+    document.getElementById('songBtn').classList.add('active');
+    document.getElementById('freeBtn').classList.remove('active');
+    document.getElementById('songPanel').style.display = 'block';
+  });
+
+  document.querySelectorAll('[data-song]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      stopPlayback();
+      currentSong = SONGS[btn.dataset.song];
+      songIndex = 0;
+      updateSongUI();
+    });
+  });
+
+  buildPiano();
+</script>
+</body>
+</html>
