@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to book your seat at DocNest Study Room, Thripunithura, Ernakulam — payment, confirmation and onboarding steps.">
+    <meta name="robots" content="noindex, follow">
+    <title>How to Book Your Seat - DocNest Study Room</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .booking-page {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .booking-header h1 {
+            font-size: 2.25rem;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+
+        .booking-header p {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+
+        .booking-intro {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin-bottom: 36px;
+            color: #2c5282;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .step {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 18px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+        }
+
+        .step-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .step-num {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-head h2 {
+            font-size: 1.15rem;
+            color: #2b6cb0;
+            margin: 0;
+        }
+
+        .step p {
+            color: #4a5568;
+            line-height: 1.75;
+            font-size: 0.95rem;
+            margin: 0 0 10px;
+        }
+
+        .step p:last-child {
+            margin-bottom: 0;
+        }
+
+        .fee-box {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .fee-row.total {
+            border-top: 1px solid #e2e8f0;
+            margin-top: 6px;
+            padding-top: 10px;
+            font-weight: 700;
+            color: #1a202c;
+            font-size: 1.05rem;
+        }
+
+        .fee-note {
+            color: #718096;
+            font-size: 0.85rem;
+        }
+
+        .qr-wrap {
+            text-align: center;
+            margin: 18px 0 6px;
+        }
+
+        .qr-wrap img {
+            max-width: 280px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .upi-id {
+            display: inline-block;
+            margin-top: 10px;
+            background: #edf2f7;
+            color: #2d3748;
+            font-family: monospace;
+            font-size: 0.95rem;
+            padding: 6px 14px;
+            border-radius: 6px;
+        }
+
+        .doc-list {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0;
+        }
+
+        .doc-list li {
+            padding: 6px 0;
+            color: #4a5568;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .doc-list li::before {
+            content: "\2713";
+            color: #38a169;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .cta-row {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .wa-btn {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .terms-callout {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 28px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 36px;
+        }
+
+        .terms-callout h2 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .terms-callout p {
+            opacity: 0.9;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .terms-callout a {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .terms-callout a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 24px 0 0;
+            color: #a0aec0;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 44px;
+        }
+
+        .site-footer a {
+            color: #718096;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-page">
+        <a href="index.html" class="back-link">&#8592; Back to DocNest</a>
+
+        <div class="booking-header">
+            <h1>How to Book Your Seat</h1>
+            <p>Five simple steps to get started at DocNest Study Room</p>
+        </div>
+
+        <div class="booking-intro">
+            Found a vacancy and ready to join? Follow the steps below. The whole process happens over WhatsApp and takes just a few minutes.
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step">
+            <div class="step-head">
+                <div class="step-num">1</div>
+                <h2>Check seat availability</h2>
+            </div>
+            <p>Message us on WhatsApp with the exam you are preparing for and the dates you need a seat. We will let you know if there is a vacancy.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+            <div class="step-head">
+                <div class="step-num">2</div>
+                <h2>Make the payment</h2>
+            </div>
+            <p>Once a seat is confirmed, scan the QR code below to pay using any UPI app (BHIM, PhonePe, Google Pay, Paytm, CRED).</p>
+
+            <div class="fee-box">
+                <div class="fee-row">
+                    <span>Monthly seat fee</span>
+                    <span>&#8377;2,000</span>
+                </div>
+                <div class="fee-row">
+                    <span>Caution deposit <span class="fee-note">(refundable on leaving)</span></span>
+                    <span>&#8377;500</span>
+                </div>
+                <div class="fee-row total">
+                    <span>Total payable now</span>
+                    <span>&#8377;2,500</span>
+                </div>
+            </div>
+
+            <div class="qr-wrap">
+                <img src="images/docnest-payment-qr.jpeg" alt="DocNest payment QR code">
+                <div><span class="upi-id">UPI ID: cnb.628020266303@cnrb</span></div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+            <div class="step-head">
+                <div class="step-num">3</div>
+                <h2>Send the payment screenshot</h2>
+            </div>
+            <p>After paying, share a screenshot of the successful payment with us on WhatsApp so we can verify it.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step">
+            <div class="step-head">
+                <div class="step-num">4</div>
+                <h2>Receive your confirmation</h2>
+            </div>
+            <p>Once the payment is received and verified, we will send you a payment confirmation acknowledgement. Your seat is now booked.</p>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step">
+            <div class="step-head">
+                <div class="step-num">5</div>
+                <h2>Submit your ID for records</h2>
+            </div>
+            <p>Finally, share a soft copy of your Aadhaar card so we can complete your registration. Please make sure:</p>
+            <ul class="doc-list">
+                <li>Both the front and back sides are included</li>
+                <li>Your address is clearly readable</li>
+                <li>Your photo is clearly visible</li>
+            </ul>
+        </div>
+
+        <div class="cta-row">
+            <a class="wa-btn" href="https://wa.me/918281447237" target="_blank">&#128172; Start on WhatsApp</a>
+        </div>
+
+        <div class="terms-callout">
+            <h2>Before you book</h2>
+            <p>Please read our Terms &amp; Conditions of usage. Booking a seat means you agree to them.</p>
+            <a href="terms.html">Read Terms &amp; Conditions</a>
+        </div>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 DocNest Study Room, Thripunithura, Ernakulam &nbsp;|&nbsp; <a href="index.html">Home</a></p>
+        </footer>
+    </div>
+</body>
+</html>
