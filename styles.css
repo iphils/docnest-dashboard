@@ -18,9 +18,35 @@ body {
 }
 
 .page-header {
+    position: relative;
+    overflow: hidden;
+    padding: 36px 16px;
     text-align: center;
     margin-bottom: 40px;
     margin-top: 20px;
+}
+
+.header-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.page-header {
+    cursor: grab;
+}
+
+.page-header.banner-grabbing {
+    cursor: grabbing;
+}
+
+.page-header h1,
+.page-header p {
+    position: relative;
+    z-index: 1;
 }
 
 .page-header h1 {
