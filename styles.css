@@ -503,9 +503,44 @@ body {
     border-radius: 8px !important;
     display: inline-flex !important;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
 }
 
 .whatsapp-btn:hover {
     background: #20ba5a !important;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 280px;
+    max-width: 100%;
+    margin-top: 8px;
+}
+
+.booking-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+
+.booking-field span {
+    font-size: 0.8125rem;
+    opacity: 0.9;
+}
+
+.booking-field input {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
 }

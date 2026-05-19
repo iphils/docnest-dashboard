@@ -198,7 +198,14 @@ function renderGallery() {
 
 function renderContact() {
   const contactSection = document.getElementById('contact-section');
-  const whatsappLink = `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(siteConfig.contact.whatsapp.text)}`;
+  const wa = siteConfig.contact.whatsapp;
+
+  const fieldsHtml = wa.fields.map((field, i) => `
+    <label class="booking-field">
+      <span>${field.label}${field.required ? ' *' : ''}</span>
+      <input type="${field.inputType}" id="booking-field-${i}" ${field.required ? 'required' : ''}>
+    </label>
+  `).join('');
 
   contactSection.innerHTML = `
     <h2>${siteConfig.contact.heading}</h2>
@@ -206,11 +213,12 @@ function renderContact() {
 
     <div class="contact-info">
       <div class="contact-item">
-        <div class="contact-label">WhatsApp Us</div>
-        <div class="contact-value">
-          <a href="${whatsappLink}" class="whatsapp-btn" target="_blank">
-            ${siteConfig.contact.whatsapp.display}
-          </a>
+        <div class="contact-label">Request a Booking</div>
+        <div class="booking-form">
+          ${fieldsHtml}
+          <button type="button" class="whatsapp-btn" id="booking-submit">
+            ${wa.display}
+          </button>
         </div>
       </div>
 
@@ -222,4 +230,28 @@ function renderContact() {
       </div>
     </div>
   `;
+
+  document.getElementById('booking-submit').addEventListener('click', () => {
+    let message = wa.text;
+    for (let i = 0; i < wa.fields.length; i++) {
+      const field = wa.fields[i];
+      const input = document.getElementById(`booking-field-${i}`);
+      const value = input.value.trim();
+      if (field.required && !value) {
+        input.focus();
+        input.reportValidity();
+        return;
+      }
+      const display = field.inputType === 'date' && value ? formatBookingDate(value) : value;
+      message = message.split(field.placeholder).join(display);
+    }
+    const link = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
+    window.open(link, '_blank');
+  });
+}
+
+function formatBookingDate(value) {
+  const date = new Date(value + 'T00:00:00');
+  if (isNaN(date)) return value;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }

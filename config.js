@@ -262,7 +262,12 @@ const siteConfig = {
     whatsapp: {
       number: "918281447237",
       text: "Hello! I'm preparing for [EXAM NAME] and looking for a study space from [START DATE] to [END DATE]. Can you share details about seat availability?",
-      display: "💬 Chat on WhatsApp"
+      display: "💬 Send Booking Request",
+      fields: [
+        { placeholder: "[EXAM NAME]", label: "Exam you're preparing for", inputType: "text", required: true },
+        { placeholder: "[START DATE]", label: "Start date", inputType: "date", required: true },
+        { placeholder: "[END DATE]", label: "End date", inputType: "date", required: true }
+      ]
     },
     phone: {
       number: "+918281447237",

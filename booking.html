@@ -162,20 +162,48 @@
             flex-shrink: 0;
         }
 
-        .cta-row {
-            text-align: center;
-            margin-top: 16px;
+        .book-form {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 360px;
         }
 
-        .wa-btn {
-            display: inline-block;
+        .book-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .book-field label {
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .book-field input {
+            padding: 10px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .book-submit {
+            align-self: flex-start;
             background: #25D366;
             color: white;
-            text-decoration: none;
+            border: none;
             font-weight: 600;
             padding: 12px 26px;
             border-radius: 8px;
             font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .book-submit:hover {
+            background: #20ba5a;
         }
 
         .terms-callout {
@@ -261,7 +289,8 @@
                 <div class="step-num">1</div>
                 <h2>Check seat availability</h2>
             </div>
-            <p>Message us on WhatsApp with the exam you are preparing for and the dates you need a seat. We will let you know if there is a vacancy.</p>
+            <p>Fill in the details below and we'll open WhatsApp with your booking request ready to send. We'll reply letting you know if there is a vacancy.</p>
+            <div class="book-form" id="book-form"></div>
         </div>
 
         <!-- Step 2 -->
@@ -325,10 +354,6 @@
             </ul>
         </div>
 
-        <div class="cta-row">
-            <a class="wa-btn" href="https://wa.me/918281447237" target="_blank">&#128172; Start on WhatsApp</a>
-        </div>
-
         <div class="terms-callout">
             <h2>Before you book</h2>
             <p>Please read our Terms &amp; Conditions of usage. Booking a seat means you agree to them.</p>
@@ -339,5 +364,57 @@
             <p>&copy; 2025 DocNest Study Room, Thripunithura, Ernakulam &nbsp;|&nbsp; <a href="index.html">Home</a></p>
         </footer>
     </div>
+
+    <script src="config.js"></script>
+    <script>
+        (function () {
+            var wa = siteConfig.contact.whatsapp;
+            var form = document.getElementById('book-form');
+
+            wa.fields.forEach(function (field, i) {
+                var wrap = document.createElement('div');
+                wrap.className = 'book-field';
+                var label = document.createElement('label');
+                label.htmlFor = 'book-field-' + i;
+                label.textContent = field.label + (field.required ? ' *' : '');
+                var input = document.createElement('input');
+                input.type = field.inputType;
+                input.id = 'book-field-' + i;
+                if (field.required) input.required = true;
+                wrap.appendChild(label);
+                wrap.appendChild(input);
+                form.appendChild(wrap);
+            });
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'book-submit';
+            btn.textContent = wa.display;
+            form.appendChild(btn);
+
+            btn.addEventListener('click', function () {
+                var message = wa.text;
+                for (var i = 0; i < wa.fields.length; i++) {
+                    var field = wa.fields[i];
+                    var input = document.getElementById('book-field-' + i);
+                    var value = input.value.trim();
+                    if (field.required && !value) {
+                        input.focus();
+                        input.reportValidity();
+                        return;
+                    }
+                    var display = value;
+                    if (field.inputType === 'date' && value) {
+                        var d = new Date(value + 'T00:00:00');
+                        if (!isNaN(d)) {
+                            display = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                        }
+                    }
+                    message = message.split(field.placeholder).join(display);
+                }
+                window.open('https://wa.me/' + wa.number + '?text=' + encodeURIComponent(message), '_blank');
+            });
+        })();
+    </script>
 </body>
 </html>
