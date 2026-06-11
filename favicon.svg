@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#667eea"/>
+      <stop offset="1" stop-color="#764ba2"/>
+    </linearGradient>
+  </defs>
+  <!-- Brand-gradient tile -->
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <!-- Reading lamp glow -->
+  <circle cx="32" cy="18" r="9" fill="#fef3c7" opacity="0.9"/>
+  <circle cx="32" cy="18" r="14" fill="#fef3c7" opacity="0.25"/>
+  <!-- Open book -->
+  <path d="M32 26c-5.5-3.8-13.5-4.7-21-3.6v26c7.5-1.1 15.5-0.2 21 3.6 5.5-3.8 13.5-4.7 21-3.6v-26c-7.5-1.1-15.5-0.2-21 3.6z" fill="#ffffff"/>
+  <path d="M32 26v26" stroke="#764ba2" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Page lines -->
+  <g stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" opacity="0.8">
+    <path d="M16.5 30.5c3.5-.4 7 0 10 1.2"/>
+    <path d="M16.5 36.5c3.5-.4 7 0 10 1.2"/>
+    <path d="M16.5 42.5c3.5-.4 7 0 10 1.2"/>
+    <path d="M47.5 30.5c-3.5-.4-7 0-10 1.2"/>
+    <path d="M47.5 36.5c-3.5-.4-7 0-10 1.2"/>
+    <path d="M47.5 42.5c-3.5-.4-7 0-10 1.2"/>
+  </g>
+</svg>

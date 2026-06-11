@@ -6,6 +6,7 @@
     <meta name="description" content="How to book your seat at DocNest Study Room, Thripunithura, Ernakulam — payment, confirmation and onboarding steps.">
     <meta name="robots" content="noindex, follow">
     <title>How to Book Your Seat - DocNest Study Room</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <style>
         .booking-page {
@@ -192,7 +193,7 @@
             gap: 4px;
         }
 
-        .book-field label {
+        .book-field span {
             font-size: 0.85rem;
             color: #4a5568;
             font-weight: 500;
@@ -373,60 +374,17 @@
         </div>
 
         <footer class="site-footer">
-            <p>&copy; 2025 DocNest Study Room, Thripunithura, Ernakulam &nbsp;|&nbsp; <a href="index.html">Home</a></p>
+            <p>&copy; <span id="footer-year">2026</span> DocNest Study Room, Thripunithura, Ernakulam &nbsp;|&nbsp; <a href="index.html">Home</a></p>
         </footer>
     </div>
 
     <script src="config.js"></script>
+    <script src="app.js"></script>
     <script>
-        (function () {
-            var wa = siteConfig.contact.whatsapp;
-            var form = document.getElementById('book-form');
-
-            wa.fields.forEach(function (field, i) {
-                var wrap = document.createElement('div');
-                wrap.className = 'book-field';
-                var label = document.createElement('label');
-                label.htmlFor = 'book-field-' + i;
-                label.textContent = field.label + (field.required ? ' *' : '');
-                var input = document.createElement('input');
-                input.type = field.inputType;
-                input.id = 'book-field-' + i;
-                if (field.required) input.required = true;
-                wrap.appendChild(label);
-                wrap.appendChild(input);
-                form.appendChild(wrap);
-            });
-
-            var btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'book-submit';
-            btn.textContent = wa.display;
-            form.appendChild(btn);
-
-            btn.addEventListener('click', function () {
-                var message = wa.text;
-                for (var i = 0; i < wa.fields.length; i++) {
-                    var field = wa.fields[i];
-                    var input = document.getElementById('book-field-' + i);
-                    var value = input.value.trim();
-                    if (field.required && !value) {
-                        input.focus();
-                        input.reportValidity();
-                        return;
-                    }
-                    var display = value;
-                    if (field.inputType === 'date' && value) {
-                        var d = new Date(value + 'T00:00:00');
-                        if (!isNaN(d)) {
-                            display = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-                        }
-                    }
-                    message = message.split(field.placeholder).join(display);
-                }
-                window.open('https://wa.me/' + wa.number + '?text=' + encodeURIComponent(message), '_blank');
-            });
-        })();
+        initBookingForm(document.getElementById('book-form'), {
+            fieldClass: 'book-field',
+            buttonClass: 'book-submit'
+        });
     </script>
 </body>
 </html>

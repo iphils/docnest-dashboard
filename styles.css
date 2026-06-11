@@ -17,36 +17,50 @@ body {
     padding: 20px;
 }
 
+/* Top Nav */
+.top-nav {
+    text-align: right;
+    padding: 8px 0 0;
+    margin-bottom: 4px;
+}
+
+.top-nav a {
+    color: #718096;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.top-nav a:hover {
+    color: #4a5568;
+}
+
+.nav-sep {
+    color: #cbd5e0;
+}
+
+/* Page Header — lightweight CSS-only animated gradient (no JS, no WebGL) */
 .page-header {
     position: relative;
     overflow: hidden;
-    padding: 36px 16px;
+    padding: 56px 16px;
     text-align: center;
     margin-bottom: 40px;
     margin-top: 20px;
+    border-radius: 12px;
+    background: linear-gradient(120deg, #eef2ff, #faf5ff, #ebf8ff, #f3e8ff);
+    background-size: 300% 300%;
+    animation: header-drift 16s ease-in-out infinite;
 }
 
-.header-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
+@keyframes header-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
-.page-header {
-    cursor: grab;
-}
-
-.page-header.banner-grabbing {
-    cursor: grabbing;
-}
-
-.page-header h1,
-.page-header p {
-    position: relative;
-    z-index: 1;
+@media (prefers-reduced-motion: reduce) {
+    .page-header {
+        animation: none;
+    }
 }
 
 .page-header h1 {
@@ -239,6 +253,11 @@ body {
     margin-bottom: 4px;
 }
 
+.pricing-period {
+    font-size: 1rem;
+    color: #718096;
+}
+
 .pricing-original {
     text-decoration: line-through;
     color: #a0aec0;
@@ -395,16 +414,89 @@ body {
     }
 }
 
+.gallery-grid a {
+    display: block;
+    cursor: zoom-in;
+}
+
 .gallery-grid img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-radius: 8px;
     transition: transform 0.2s;
+    display: block;
 }
 
 .gallery-grid img:hover {
     transform: scale(1.05);
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(15, 18, 35, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.lightbox[hidden] {
+    display: none;
+}
+
+.lightbox figure {
+    margin: 0;
+    text-align: center;
+    max-width: 90vw;
+}
+
+.lightbox img {
+    max-width: 90vw;
+    max-height: 82vh;
+    border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox figcaption {
+    color: #cbd5e0;
+    font-size: 0.9rem;
+    margin-top: 12px;
+}
+
+.lightbox button {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.lightbox button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+}
+
+.lightbox-prev {
+    margin-right: 16px;
+}
+
+.lightbox-next {
+    margin-left: 16px;
 }
 
 /* CTA Section */
@@ -472,6 +564,56 @@ body {
     font-weight: 600;
     background: #c6f6d5;
     color: #22543d;
+}
+
+.schedule-badge.red {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+/* Additional Services grid (auto-fit instead of 4 fixed columns) */
+.services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    margin-bottom: 48px;
+}
+
+/* Find Us / Map */
+.map-section {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 48px;
+}
+
+.map-section iframe {
+    display: block;
+    width: 100%;
+    height: 360px;
+    border: 0;
+}
+
+.map-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+.directions-link {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.directions-link:hover {
+    text-decoration: underline;
 }
 
 /* Contact Info */
@@ -569,4 +711,19 @@ body {
     border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 24px 0;
+    color: #a0aec0;
+    font-size: 0.85rem;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 8px;
+}
+
+.site-footer a {
+    color: #718096;
+    text-decoration: none;
 }

@@ -1,257 +1,150 @@
-// Main application logic - Renders content from config.js
-document.addEventListener('DOMContentLoaded', function() {
+// Interactive behaviour shared across pages: the WhatsApp booking-request
+// form, the photo-gallery lightbox, and the footer year.
+// Page content and SEO tags live statically in the HTML for SEO/social crawlers.
+(function () {
 
-  // Render SEO meta tags
-  renderSEOMetaTags();
-
-  // Render page header
-  renderPageHeader();
-
-  // Render hero section
-  renderHero();
-
-  // Render features grid
-  renderFeatures();
-
-  // Render pricing plans
-  renderPricingPlans();
-
-  // Render facility details
-  renderFacilityDetails();
-
-  // Render operating hours and guidelines
-  renderOperatingHours();
-  renderGuidelines();
-
-  // Render additional services
-  renderAdditionalServices();
-
-  // Render photo gallery
-  renderGallery();
-
-  // Render contact section
-  renderContact();
-});
-
-function renderSEOMetaTags() {
-  const head = document.head;
-
-  // Update page title
-  document.title = siteConfig.metadata.title;
-
-  // Update existing meta description
-  document.querySelector('meta[name="description"]').setAttribute('content', siteConfig.metadata.description);
-
-  // Create helper function to add meta tag
-  function addMetaTag(attributes) {
-    const meta = document.createElement('meta');
-    Object.entries(attributes).forEach(([key, value]) => {
-      meta.setAttribute(key, value);
-    });
-    head.appendChild(meta);
+  // Today's date in the visitor's local timezone, as YYYY-MM-DD.
+  function todayISO() {
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 10);
   }
 
-  // Add basic meta tags
-  addMetaTag({ name: 'keywords', content: siteConfig.metadata.keywords });
-  addMetaTag({ name: 'author', content: siteConfig.metadata.author });
-  addMetaTag({ name: 'robots', content: siteConfig.metadata.robots });
+  function formatBookingDate(value) {
+    var date = new Date(value + 'T00:00:00');
+    if (isNaN(date)) return value;
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
 
-  // Add canonical link
-  const canonical = document.createElement('link');
-  canonical.rel = 'canonical';
-  canonical.href = siteConfig.metadata.canonical;
-  head.appendChild(canonical);
+  // Renders the booking-request form into `container` and wires up the
+  // WhatsApp submit. `opts.fieldClass` / `opts.buttonClass` let each page
+  // keep its own styling.
+  window.initBookingForm = function (container, opts) {
+    opts = opts || {};
+    var fieldClass = opts.fieldClass || 'booking-field';
+    var buttonClass = opts.buttonClass || 'whatsapp-btn';
+    var wa = siteConfig.contact.whatsapp;
+    var inputs = [];
+    var dateInputs = [];
 
-  // Add Open Graph meta tags
-  addMetaTag({ property: 'og:type', content: siteConfig.seo.og.type });
-  addMetaTag({ property: 'og:url', content: siteConfig.seo.og.url });
-  addMetaTag({ property: 'og:title', content: siteConfig.seo.og.title });
-  addMetaTag({ property: 'og:description', content: siteConfig.seo.og.description });
-  addMetaTag({ property: 'og:image', content: siteConfig.seo.og.image });
-  addMetaTag({ property: 'og:locale', content: siteConfig.seo.og.locale });
-
-  // Add Twitter Card meta tags
-  addMetaTag({ property: 'twitter:card', content: siteConfig.seo.twitter.card });
-  addMetaTag({ property: 'twitter:url', content: siteConfig.seo.twitter.url });
-  addMetaTag({ property: 'twitter:title', content: siteConfig.seo.twitter.title });
-  addMetaTag({ property: 'twitter:description', content: siteConfig.seo.twitter.description });
-  addMetaTag({ property: 'twitter:image', content: siteConfig.seo.twitter.image });
-
-  // Add structured data (JSON-LD)
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.textContent = JSON.stringify(siteConfig.structuredData);
-  head.appendChild(script);
-}
-
-function renderPageHeader() {
-  const headerDiv = document.getElementById('page-header');
-  headerDiv.innerHTML = `
-    <h1>${siteConfig.metadata.pageHeading}</h1>
-    <p>${siteConfig.metadata.pageSubheading}</p>
-  `;
-}
-
-function renderHero() {
-  const heroDiv = document.getElementById('hero-section');
-  heroDiv.innerHTML = `
-    <img src="${siteConfig.hero.image}" alt="${siteConfig.hero.alt}" class="hero-image">
-  `;
-}
-
-function renderFeatures() {
-  const featuresGrid = document.getElementById('features-grid');
-  featuresGrid.innerHTML = siteConfig.features.map(feature => `
-    <div class="feature-card">
-      <div class="feature-icon ${feature.iconColor}">
-        ${feature.icon}
-      </div>
-      <h3>${feature.title}</h3>
-      <p>${feature.description}</p>
-    </div>
-  `).join('');
-}
-
-function renderPricingPlans() {
-  const pricingGrid = document.getElementById('pricing-grid');
-  pricingGrid.innerHTML = siteConfig.pricingPlans.map(plan => `
-    <div class="pricing-card ${plan.highlighted ? 'highlighted' : ''}">
-      <img src="${plan.image}" alt="${plan.title}" class="pricing-image">
-      <div class="pricing-content">
-        <span class="pricing-badge ${plan.badge.color}">${plan.badge.text}</span>
-        <h3>${plan.title}</h3>
-        <div class="pricing-price">${plan.price}<span style="font-size: 1rem; color: #718096;"> ${plan.period}</span></div>
-        <p class="pricing-description">${plan.description}</p>
-        <ul class="pricing-features">
-          ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
-        </ul>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderFacilityDetails() {
-  const facilityGrid = document.getElementById('facility-grid');
-  facilityGrid.innerHTML = siteConfig.facilityDetails.map(facility => `
-    <div class="info-section">
-      <h3>${facility.title}</h3>
-      <p>${facility.description}</p>
-      <div class="info-images">
-        ${facility.images.map(img => `<img src="${img.src}" alt="${img.alt}">`).join('')}
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderOperatingHours() {
-  const scheduleDiv = document.getElementById('operating-hours');
-  scheduleDiv.innerHTML = `
-    <h3>Operating Hours</h3>
-    ${siteConfig.operatingHours.map(schedule => {
-      const badgeStyle = schedule.badge.color === 'red'
-        ? 'background: #fed7d7; color: #c53030;'
-        : '';
-      return `
-        <div class="schedule-item">
-          <span>${schedule.days}</span>
-          <span class="schedule-badge" style="${badgeStyle}">${schedule.badge.text}</span>
-        </div>
-      `;
-    }).join('')}
-  `;
-}
-
-function renderGuidelines() {
-  const guidelinesDiv = document.getElementById('guidelines-list');
-  guidelinesDiv.innerHTML = `
-    <h3>Study Room Guidelines</h3>
-    ${siteConfig.guidelines.map(guideline => `
-      <div class="guideline-item">
-        <div>
-          <div class="guideline-label">${guideline.label}</div>
-          <div class="guideline-description">${guideline.description}</div>
-        </div>
-      </div>
-    `).join('')}
-  `;
-}
-
-function renderAdditionalServices() {
-  const servicesGrid = document.getElementById('additional-services-grid');
-  servicesGrid.innerHTML = siteConfig.additionalServices.map(service => `
-    <div class="feature-card">
-      <div class="feature-icon ${service.iconColor}">
-        ${service.icon}
-      </div>
-      <h3>${service.title}</h3>
-      <p>${service.description}</p>
-    </div>
-  `).join('');
-}
-
-function renderGallery() {
-  const galleryGrid = document.getElementById('gallery-grid');
-  galleryGrid.innerHTML = siteConfig.gallery.map(image => `
-    <img src="${image.src}" alt="${image.alt}">
-  `).join('');
-}
-
-function renderContact() {
-  const contactSection = document.getElementById('contact-section');
-  const wa = siteConfig.contact.whatsapp;
-
-  const fieldsHtml = wa.fields.map((field, i) => `
-    <label class="booking-field">
-      <span>${field.label}${field.required ? ' *' : ''}</span>
-      <input type="${field.inputType}" id="booking-field-${i}" ${field.required ? 'required' : ''}>
-    </label>
-  `).join('');
-
-  contactSection.innerHTML = `
-    <h2>${siteConfig.contact.heading}</h2>
-    <p>${siteConfig.contact.subheading}</p>
-
-    <div class="contact-info">
-      <div class="contact-item">
-        <div class="contact-label">Request a Booking</div>
-        <div class="booking-form">
-          ${fieldsHtml}
-          <button type="button" class="whatsapp-btn" id="booking-submit">
-            ${wa.display}
-          </button>
-        </div>
-      </div>
-
-      <div class="contact-item">
-        <div class="contact-label">Visit Us</div>
-        <div class="contact-value">
-          ${siteConfig.contact.address.line1}
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('booking-submit').addEventListener('click', () => {
-    let message = wa.text;
-    for (let i = 0; i < wa.fields.length; i++) {
-      const field = wa.fields[i];
-      const input = document.getElementById(`booking-field-${i}`);
-      const value = input.value.trim();
-      if (field.required && !value) {
-        input.focus();
-        input.reportValidity();
-        return;
+    wa.fields.forEach(function (field) {
+      var label = document.createElement('label');
+      label.className = fieldClass;
+      var span = document.createElement('span');
+      span.textContent = field.label + (field.required ? ' *' : '');
+      var input = document.createElement('input');
+      input.type = field.inputType;
+      if (field.required) input.required = true;
+      if (field.inputType === 'date') {
+        input.min = todayISO(); // no booking requests for past dates
+        dateInputs.push(input);
       }
-      const display = field.inputType === 'date' && value ? formatBookingDate(value) : value;
-      message = message.split(field.placeholder).join(display);
-    }
-    const link = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
-    window.open(link, '_blank');
-  });
-}
+      label.appendChild(span);
+      label.appendChild(input);
+      container.appendChild(label);
+      inputs.push(input);
+    });
 
-function formatBookingDate(value) {
-  const date = new Date(value + 'T00:00:00');
-  if (isNaN(date)) return value;
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-}
+    // Keep the end date from being set before the start date.
+    if (dateInputs.length === 2) {
+      dateInputs[0].addEventListener('change', function () {
+        dateInputs[1].min = dateInputs[0].value || todayISO();
+        if (dateInputs[1].value && dateInputs[1].value < dateInputs[1].min) {
+          dateInputs[1].value = '';
+        }
+      });
+    }
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = buttonClass;
+    btn.textContent = wa.display;
+    container.appendChild(btn);
+
+    btn.addEventListener('click', function () {
+      var message = wa.text;
+      for (var i = 0; i < wa.fields.length; i++) {
+        var field = wa.fields[i];
+        var input = inputs[i];
+        if (!input.checkValidity()) {
+          input.focus();
+          input.reportValidity();
+          return;
+        }
+        var value = input.value.trim();
+        var display = field.inputType === 'date' && value ? formatBookingDate(value) : value;
+        message = message.split(field.placeholder).join(display);
+      }
+      window.open('https://wa.me/' + wa.number + '?text=' + encodeURIComponent(message), '_blank');
+    });
+  };
+
+  // Click-to-enlarge lightbox for the photo gallery. Falls back to plain
+  // image links when JS is unavailable.
+  function initLightbox() {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-grid a'));
+    if (!links.length) return;
+
+    var current = 0;
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.hidden = true;
+    overlay.innerHTML =
+      '<button class="lightbox-close" aria-label="Close">&times;</button>' +
+      '<button class="lightbox-prev" aria-label="Previous photo">&#8249;</button>' +
+      '<figure><img alt=""><figcaption></figcaption></figure>' +
+      '<button class="lightbox-next" aria-label="Next photo">&#8250;</button>';
+    document.body.appendChild(overlay);
+
+    var img = overlay.querySelector('img');
+    var caption = overlay.querySelector('figcaption');
+
+    function show(i) {
+      current = (i + links.length) % links.length;
+      var thumb = links[current].querySelector('img');
+      img.src = links[current].href;
+      img.alt = thumb ? thumb.alt : '';
+      caption.textContent = img.alt;
+    }
+
+    function open(i) {
+      show(i);
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    links.forEach(function (link, i) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        open(i);
+      });
+    });
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay || e.target.className === 'lightbox-close') close();
+    });
+    overlay.querySelector('.lightbox-prev').addEventListener('click', function () { show(current - 1); });
+    overlay.querySelector('.lightbox-next').addEventListener('click', function () { show(current + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (overlay.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var bookingForm = document.getElementById('booking-form');
+    if (bookingForm) initBookingForm(bookingForm);
+
+    initLightbox();
+
+    var year = document.getElementById('footer-year');
+    if (year) year.textContent = new Date().getFullYear();
+  });
+})();
