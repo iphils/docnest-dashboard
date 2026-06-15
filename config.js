@@ -4,7 +4,7 @@
 const siteConfig = {
   contact: {
     whatsapp: {
-      number: "918281447237",
+      number: "917994247237",
       text: "Hello! I'm preparing for [EXAM NAME] and looking for a study space from [START DATE] to [END DATE]. Can you share details about seat availability?",
       display: "💬 Send Booking Request",
       fields: [
@@ -14,8 +14,8 @@ const siteConfig = {
       ]
     },
     phone: {
-      number: "+918281447237",
-      display: "+91 82814 47237"
+      number: "+917994247237",
+      display: "+91 79942 47237"
     },
     address: {
       line1: "1st Floor, 25th Hour Clinic"
