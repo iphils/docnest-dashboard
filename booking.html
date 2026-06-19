@@ -89,6 +89,33 @@
             margin-bottom: 0;
         }
 
+        .plan-toggle {
+            display: inline-flex;
+            background: #edf2f7;
+            border-radius: 10px;
+            padding: 4px;
+            margin: 14px 0 4px;
+            gap: 4px;
+        }
+
+        .plan-option {
+            border: none;
+            background: transparent;
+            color: #4a5568;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 8px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .plan-option.active {
+            background: white;
+            color: #2b6cb0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
         .fee-box {
             background: #f7fafc;
             border: 1px solid #e2e8f0;
@@ -318,10 +345,15 @@
             </div>
             <p>Once a seat is confirmed, scan the QR code below to pay using any UPI app (BHIM, PhonePe, Google Pay, Paytm, CRED).</p>
 
+            <div class="plan-toggle" id="plan-toggle">
+                <button type="button" class="plan-option active" data-plan="monthly">Monthly</button>
+                <button type="button" class="plan-option" data-plan="daily">Daily</button>
+            </div>
+
             <div class="fee-box">
                 <div class="fee-row">
-                    <span>Monthly seat fee</span>
-                    <span>&#8377;2,000</span>
+                    <span id="plan-fee-label">Monthly seat fee</span>
+                    <span id="plan-fee-amount">&#8377;2,000</span>
                 </div>
                 <div class="fee-row">
                     <span>Caution deposit <span class="fee-note">(refundable on leaving)</span></span>
@@ -329,7 +361,7 @@
                 </div>
                 <div class="fee-row total">
                     <span>Total payable now</span>
-                    <span>&#8377;2,500</span>
+                    <span id="plan-fee-total">&#8377;2,500</span>
                 </div>
             </div>
 
@@ -385,6 +417,41 @@
             fieldClass: 'book-field',
             buttonClass: 'book-submit'
         });
+
+        (function initPlanToggle() {
+            var DEPOSIT = 500;
+            var PLANS = {
+                monthly: { label: 'Monthly seat fee', fee: 2000 },
+                daily: { label: 'Daily seat fee', fee: 299 }
+            };
+            var rupee = '₹';
+            var feeLabel = document.getElementById('plan-fee-label');
+            var feeAmount = document.getElementById('plan-fee-amount');
+            var feeTotal = document.getElementById('plan-fee-total');
+            var buttons = document.querySelectorAll('#plan-toggle .plan-option');
+
+            function money(n) {
+                return rupee + n.toLocaleString('en-IN');
+            }
+
+            function setPlan(plan) {
+                var p = PLANS[plan];
+                feeLabel.textContent = p.label;
+                feeAmount.textContent = money(p.fee);
+                feeTotal.textContent = money(p.fee + DEPOSIT);
+                buttons.forEach(function (b) {
+                    b.classList.toggle('active', b.dataset.plan === plan);
+                });
+            }
+
+            buttons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    setPlan(b.dataset.plan);
+                });
+            });
+
+            setPlan('monthly');
+        })();
     </script>
 </body>
 </html>
