@@ -16,9 +16,19 @@
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
+  // Resolves the branch label used to fill [BRANCH] in the WhatsApp message.
+  // Read at click time so pages with a branch switcher (booking.html) can
+  // update the container's data-branch attribute live. Priority:
+  // opts.branch (string or function) > container[data-branch] > generic.
+  function resolveBranch(container, opts) {
+    var b = typeof opts.branch === 'function' ? opts.branch() : opts.branch;
+    b = b || container.getAttribute('data-branch');
+    return b || 'the DocNest study room';
+  }
+
   // Renders the booking-request form into `container` and wires up the
   // WhatsApp submit. `opts.fieldClass` / `opts.buttonClass` let each page
-  // keep its own styling.
+  // keep its own styling. `opts.branch` (string or function) fills [BRANCH].
   window.initBookingForm = function (container, opts) {
     opts = opts || {};
     var fieldClass = opts.fieldClass || 'booking-field';
@@ -62,7 +72,7 @@
     container.appendChild(btn);
 
     btn.addEventListener('click', function () {
-      var message = wa.text;
+      var message = wa.text.split('[BRANCH]').join(resolveBranch(container, opts));
       for (var i = 0; i < wa.fields.length; i++) {
         var field = wa.fields[i];
         var input = inputs[i];

@@ -331,10 +331,17 @@
         <div class="step">
             <div class="step-head">
                 <div class="step-num">1</div>
-                <h2>Check seat availability</h2>
+                <h2>Choose a branch &amp; check availability</h2>
             </div>
-            <p>Fill in the details below and we'll open WhatsApp with your booking request ready to send. We'll reply letting you know if there is a vacancy.</p>
-            <div class="book-form" id="book-form"></div>
+            <p>Pick the branch you'd like to join, fill in the details below, and we'll open WhatsApp with your booking request ready to send. We'll reply letting you know if there is a vacancy.</p>
+
+            <div class="plan-toggle" id="branch-toggle">
+                <button type="button" class="plan-option active" data-branch="east-fort">East Fort</button>
+                <button type="button" class="plan-option" data-branch="metro">Metro Terminal</button>
+            </div>
+            <p id="branch-note" class="fee-note" style="margin:6px 0 0;"></p>
+
+            <div class="book-form" id="book-form" data-branch="DocNest East Fort, Thripunithura"></div>
         </div>
 
         <!-- Step 2 -->
@@ -418,39 +425,66 @@
             buttonClass: 'book-submit'
         });
 
-        (function initPlanToggle() {
-            var DEPOSIT = 500;
-            var PLANS = {
-                monthly: { label: 'Monthly seat fee', fee: 2000 },
-                daily: { label: 'Daily seat fee', fee: 299 }
-            };
+        // Branch + plan selector. Fees come from siteConfig (config.js) so
+        // pricing lives in one place. The chosen branch also updates the
+        // book-form's data-branch, which fills [BRANCH] in the WhatsApp message.
+        (function initBookingControls() {
+            var DEPOSIT = siteConfig.cautionDeposit;
+            var branches = siteConfig.branches;
             var rupee = '₹';
+            var state = { branch: 'east-fort', plan: 'monthly' };
+
+            var bookForm = document.getElementById('book-form');
             var feeLabel = document.getElementById('plan-fee-label');
             var feeAmount = document.getElementById('plan-fee-amount');
             var feeTotal = document.getElementById('plan-fee-total');
-            var buttons = document.querySelectorAll('#plan-toggle .plan-option');
+            var branchNote = document.getElementById('branch-note');
+            var branchButtons = document.querySelectorAll('#branch-toggle .plan-option');
+            var planButtons = document.querySelectorAll('#plan-toggle .plan-option');
 
             function money(n) {
                 return rupee + n.toLocaleString('en-IN');
             }
 
-            function setPlan(plan) {
-                var p = PLANS[plan];
-                feeLabel.textContent = p.label;
-                feeAmount.textContent = money(p.fee);
-                feeTotal.textContent = money(p.fee + DEPOSIT);
-                buttons.forEach(function (b) {
-                    b.classList.toggle('active', b.dataset.plan === plan);
+            function render() {
+                var b = branches[state.branch];
+                var fee = state.plan === 'monthly' ? b.monthly : b.daily;
+                var planWord = state.plan === 'monthly' ? 'Monthly' : 'Daily';
+                feeLabel.textContent = planWord + ' seat fee — ' + b.name;
+                feeAmount.textContent = money(fee);
+                feeTotal.textContent = money(fee + DEPOSIT);
+                bookForm.setAttribute('data-branch', b.whatsappLabel);
+
+                branchNote.textContent = state.branch === 'metro'
+                    ? 'The Thripunithura Terminal Metro Station branch is opening soon — send a request and we\'ll confirm your seat as soon as it opens.'
+                    : '';
+
+                branchButtons.forEach(function (x) {
+                    x.classList.toggle('active', x.dataset.branch === state.branch);
+                });
+                planButtons.forEach(function (x) {
+                    x.classList.toggle('active', x.dataset.plan === state.plan);
                 });
             }
 
-            buttons.forEach(function (b) {
-                b.addEventListener('click', function () {
-                    setPlan(b.dataset.plan);
+            branchButtons.forEach(function (x) {
+                x.addEventListener('click', function () {
+                    state.branch = x.dataset.branch;
+                    render();
+                });
+            });
+            planButtons.forEach(function (x) {
+                x.addEventListener('click', function () {
+                    state.plan = x.dataset.plan;
+                    render();
                 });
             });
 
-            setPlan('monthly');
+            // Preselect a branch from ?branch=east-fort / ?branch=metro
+            var qBranch = new URLSearchParams(window.location.search).get('branch');
+            if (qBranch && branches[qBranch]) state.branch = qBranch;
+
+            render();
         })();
     </script>
 </body>
