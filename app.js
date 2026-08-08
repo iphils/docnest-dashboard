@@ -92,7 +92,7 @@
   // Click-to-enlarge lightbox for the photo gallery. Falls back to plain
   // image links when JS is unavailable.
   function initLightbox() {
-    var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-grid a'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-grid a, .view-figure a'));
     if (!links.length) return;
 
     var current = 0;
