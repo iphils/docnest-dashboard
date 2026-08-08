@@ -43,15 +43,15 @@ const siteConfig = {
       }
     },
     "metro": {
-      name: "Metro Station",
-      whatsappLabel: "the upcoming DocNest branch at Thripunithura Terminal Metro Station",
-      status: "opening-soon",
+      name: "Metro Terminal",
+      whatsappLabel: "DocNest Metro Terminal, beside Thripunithura Terminal Metro Station",
+      status: "open",
       monthly: 2500,
       daily: 299,
       address: {
         line1: "Beside Thripunithura Terminal Metro Station",
         // Pillar number kept here for the on-site/footer address only.
-        full: "Beside Thripunithura Terminal Metro Station, Pillar No. 1044, Thripunithura, Ernakulam, Kerala"
+        full: "Beside Thripunithura Terminal Metro Station, Pillar No. 1064, Thripunithura, Ernakulam, Kerala"
       }
     }
   }

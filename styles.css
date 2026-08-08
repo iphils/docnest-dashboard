@@ -863,15 +863,15 @@ body {
     color: #9c4221;
 }
 
-/* Coming-soon banner (metro branch page) */
-.coming-soon-banner {
+/* Status banner at the top of a branch page (metro branch page) */
+.branch-banner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 10px;
     text-align: center;
-    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
     color: white;
     padding: 14px 24px;
     border-radius: 12px;
@@ -879,7 +879,7 @@ body {
     margin-bottom: 32px;
 }
 
-.coming-soon-banner .pill {
+.branch-banner .pill {
     background: rgba(255, 255, 255, 0.25);
     padding: 3px 12px;
     border-radius: 14px;

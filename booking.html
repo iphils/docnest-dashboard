@@ -339,7 +339,6 @@
                 <button type="button" class="plan-option active" data-branch="east-fort">East Fort</button>
                 <button type="button" class="plan-option" data-branch="metro">Metro Terminal</button>
             </div>
-            <p id="branch-note" class="fee-note" style="margin:6px 0 0;"></p>
 
             <div class="book-form" id="book-form" data-branch="DocNest East Fort, Thripunithura"></div>
         </div>
@@ -438,7 +437,6 @@
             var feeLabel = document.getElementById('plan-fee-label');
             var feeAmount = document.getElementById('plan-fee-amount');
             var feeTotal = document.getElementById('plan-fee-total');
-            var branchNote = document.getElementById('branch-note');
             var branchButtons = document.querySelectorAll('#branch-toggle .plan-option');
             var planButtons = document.querySelectorAll('#plan-toggle .plan-option');
 
@@ -454,10 +452,6 @@
                 feeAmount.textContent = money(fee);
                 feeTotal.textContent = money(fee + DEPOSIT);
                 bookForm.setAttribute('data-branch', b.whatsappLabel);
-
-                branchNote.textContent = state.branch === 'metro'
-                    ? 'The Thripunithura Terminal Metro Station branch is opening soon — send a request and we\'ll confirm your seat as soon as it opens.'
-                    : '';
 
                 branchButtons.forEach(function (x) {
                     x.classList.toggle('active', x.dataset.branch === state.branch);
