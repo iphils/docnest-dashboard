@@ -597,7 +597,7 @@ body {
     width: 100%;
     max-height: 420px;
     object-fit: cover;
-    object-position: center 60%;
+    object-position: center 35%;
 }
 
 .view-figure figcaption {

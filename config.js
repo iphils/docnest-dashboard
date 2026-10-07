@@ -35,8 +35,8 @@ const siteConfig = {
       // Used to fill [BRANCH] in the WhatsApp message.
       whatsappLabel: "DocNest East Fort, Thripunithura",
       status: "open",
-      monthly: 2000,
-      daily: 299,
+      monthly: 1500,
+      daily: 150,
       address: {
         line1: "1st Floor, 25th Hour Clinic",
         full: "1st Floor, 25th Hour Clinic, Main Road, Thripunithura, Ernakulam, Kerala 682301"
@@ -46,8 +46,8 @@ const siteConfig = {
       name: "Metro Terminal",
       whatsappLabel: "DocNest Metro Terminal, beside Thripunithura Terminal Metro Station",
       status: "open",
-      monthly: 2500,
-      daily: 299,
+      monthly: 2000,
+      daily: 200,
       address: {
         line1: "Beside Thripunithura Terminal Metro Station",
         // Pillar number kept here for the on-site/footer address only.
